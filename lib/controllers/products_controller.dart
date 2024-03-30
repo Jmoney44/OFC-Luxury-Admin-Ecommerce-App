@@ -56,7 +56,8 @@ class ProductsController extends GetxController {
 
   pickImage(index, context) async {
     try {
-      final img = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 80);
+      final img = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 80);
       if (img == null) {
         return;
       } else {
@@ -70,7 +71,7 @@ class ProductsController extends GetxController {
   uploadImages() async {
     pImagesLinks.clear();
     for (var item in pImagesLinks) {
-      if (item!=null) {
+      if (item != null) {
         var filename = basename(item.path);
         var destination = 'images/vendors/${currentUser!.uid}/$filename';
         Reference ref = FirebaseStorage.instance.ref().child(destination);
@@ -84,8 +85,8 @@ class ProductsController extends GetxController {
   uploadProduct(context) async {
     var store = firestore.collection(productsCollection).doc();
     await store.set({
-      'is_featured' : false,
-      'p_category' : categoryvalue.value,
+      'is_featured': false,
+      'p_category': categoryvalue.value,
       'p_subcategory': subcategoryvalue.value,
       'p_colors': FieldValue.arrayUnion([Colors.red.value, Colors.brown.value]),
       'p_imgs': FieldValue.arrayUnion(pImagesLinks),
@@ -96,7 +97,7 @@ class ProductsController extends GetxController {
       'p_quantity': pquantityController.text,
       'p_seller': Get.find<HomeController>().username,
       'p_rating': "5.0",
-      'vendor_id':currentUser!.uid,
+      'vendor_id': currentUser!.uid,
       'featured_id': ''
     });
     isloading(false);

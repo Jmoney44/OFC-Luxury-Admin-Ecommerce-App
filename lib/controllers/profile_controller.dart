@@ -30,12 +30,13 @@ class ProfileController extends GetxController {
   var shopWebsiteController = TextEditingController();
   var shopDescController = TextEditingController();
 
-  changeImage(context) async{
+  changeImage(context) async {
     try {
-      final img = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70);
+      final img = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 70);
       if (img == null) return;
       profileImgPath.value = img.path;
-    } on PlatformException  catch (e) {
+    } on PlatformException catch (e) {
       VxToast.show(context, msg: e.toString());
     }
   }
@@ -48,9 +49,11 @@ class ProfileController extends GetxController {
     profileImageLink = await ref.getDownloadURL();
   }
 
-  updateProfile({name, password, imgUrl}) async{
+  updateProfile({name, password, imgUrl}) async {
     var store = firestore.collection(vendorsCollection).doc(currentUser!.uid);
-    await store.set({'vendor_name': name, 'password': password, 'imageUrl': imgUrl}, SetOptions(merge: true));
+    await store.set(
+        {'vendor_name': name, 'password': password, 'imageUrl': imgUrl},
+        SetOptions(merge: true));
     isloading(false);
   }
 
